@@ -15,30 +15,38 @@ const Header = styled.header`
 `;
 const Title = styled.h1`
   font-size: 48px;
-  color: ${props => props.theme.accentColor};
+  color: ${(props) => props.theme.accentColor};
 `;
 const CoinList = styled.ul``;
 const Coin = styled.li`
   background: white;
-  color: ${props => props.theme.bgColor};
+  color: ${(props) => props.theme.bgColor};
   border-radius: 15px;
   margin-bottom: 10px;
-  
+
   a {
+    display: flex;
+    align-items: center;
     padding: 20px;
-    transition: color 0.2s ease-in;
-    display: block;
+    transition: 0.2s ease-in;
   }
-  
+
   &:hover {
     a {
       color: ${(props) => props.theme.accentColor};
+      font-size: 1.1rem;
+      font-weight: bold;
     }
   }
 `;
 const Loader = styled.span`
   text-align: center;
   display: block;
+`;
+const Img = styled.img`
+  width: 35px;
+  height: 35px;
+  margin-right: 10px;
 `;
 
 
@@ -75,7 +83,13 @@ function Coins() {
         <CoinList>
           {coins.map((coin) => (
             <Coin key={coin.id}>
-              <Link to={`/${coin.id}`}>{coin.name} &rarr;</Link>
+              <Link to={{
+                pathname: `/${coin.id}`,
+                state: {name: coin.name}
+              }}>
+                <Img src={`https://static.upbit.com/logos/${coin.symbol}.png`} />
+                {coin.name} &rarr;
+              </Link>
             </Coin>
           ))}
         </CoinList>
