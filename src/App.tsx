@@ -32,10 +32,11 @@ const GlobalStyle = createGlobalStyle`
     display: none;
   }
   body {
-    line-height: 1;
+    line-height: 1.2;
     font-family: 'Source Sans Pro', sans-serif;
     background-color:${(props) => props.theme.bgColor};
     color:${(props) => props.theme.textColor};
+    font-weight: 300;
   }
   menu, ol, ul {
     list-style: none;
@@ -64,10 +65,10 @@ const GlobalStyle = createGlobalStyle`
 function App() {
   return (
     <>
-      <GlobalStyle />
-      <Router />
+      <GlobalStyle/>
+      <Router/>
     </>
-  )
+  );
 }
 
 export default App;

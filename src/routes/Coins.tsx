@@ -17,7 +17,7 @@ const Title = styled.h1`
   font-size: 48px;
   color: ${(props) => props.theme.accentColor};
 `;
-const CoinList = styled.ul``;
+const CoinsList = styled.ul``;
 const Coin = styled.li`
   background: white;
   color: ${(props) => props.theme.bgColor};
@@ -28,7 +28,7 @@ const Coin = styled.li`
     display: flex;
     align-items: center;
     padding: 20px;
-    transition: 0.2s ease-in;
+    transition: 0.1s ease-in;
   }
 
   &:hover {
@@ -49,7 +49,6 @@ const Img = styled.img`
   margin-right: 10px;
 `;
 
-
 interface CoinInterface {
   id: string;
   name: string;
@@ -60,18 +59,17 @@ interface CoinInterface {
   type: string;
 }
 
-
 function Coins() {
   const [coins, setCoins] = useState<CoinInterface[]>([]);
   const [loading, setLoading] = useState(true);
-  useEffect(()=>{
+  useEffect(() => {
     (async () => {
-      const response = await fetch("http://api.coinpaprika.com/v1/coins");
+      const response = await fetch("https://api.coinpaprika.com/v1/coins");
       const json = await response.json();
-      setCoins(json.slice(0, 100));
+      setCoins(json.slice(0, 20));
       setLoading(false);
     })();
-  },[]);
+  }, []);
   return (
     <Container>
       <Header>
@@ -80,19 +78,21 @@ function Coins() {
       {loading ? (
         <Loader>Loading...</Loader>
       ) : (
-        <CoinList>
+        <CoinsList>
           {coins.map((coin) => (
             <Coin key={coin.id}>
-              <Link to={{
-                pathname: `/${coin.id}`,
-                state: {name: coin.name}
-              }}>
-                <Img src={`https://static.upbit.com/logos/${coin.symbol}.png`} />
+              <Link
+                to={{
+                  pathname: `/${coin.id}`,
+                  state: {name: coin.name},
+                }}
+              >
+                <Img src={`https://static.upbit.com/logos/${coin.symbol}.png`}/>
                 {coin.name} &rarr;
               </Link>
             </Coin>
           ))}
-        </CoinList>
+        </CoinsList>
       )}
     </Container>
   );
